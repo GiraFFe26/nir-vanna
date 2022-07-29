@@ -27,7 +27,7 @@ def collect_data(url):
     shop_data = ET.SubElement(yml_catalog_date, 'shop')
     categories_data = ET.SubElement(shop_data, 'categories')
     check_data = []
-    z = 1
+    z = 20145730
     for i in s:
         category_data = ET.SubElement(categories_data, 'category')
         c = z
@@ -98,9 +98,9 @@ def collect_data(url):
                 url_data = ET.SubElement(offer, 'url')
                 url_data.text = url
                 price_data = ET.SubElement(offer, 'price')
-                price_data.text = price_after
+                price_data.text = price_after.replace(' ', '')
                 old_price_data = ET.SubElement(offer, 'oldprice')
-                old_price_data.text = price_before
+                old_price_data.text = price_before.replace(' ', '')
                 cur_data = ET.SubElement(offer, 'currencyId')
                 cur_data.text = 'RUB'
                 category_data = ET.SubElement(offer, 'categoryId')

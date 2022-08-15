@@ -26,12 +26,12 @@ def collect_data(url):
     yml_catalog_date = ET.Element('yml_catalog')
     shop_data = ET.SubElement(yml_catalog_date, 'shop')
     categories_data = ET.SubElement(shop_data, 'categories')
-    check_data = []
+    check_data = {}
     z = 20145730
     for i in s:
         category_data = ET.SubElement(categories_data, 'category')
         c = z
-        check_data.append(i)
+        check_data[i] = c
         category_data.set('id', str(c))
         z += 1
         category_data.text = i
@@ -40,7 +40,7 @@ def collect_data(url):
             subcategory_data.set('id', str(z))
             subcategory_data.set('parentId', str(c))
             subcategory_data.text = m
-            check_data.append(m)
+            check_data[m] = z
             z += 1
     offers = ET.SubElement(shop_data, 'offers')
     categories = ['https://nir-vanna.ru' + i.find('a').get('href') for i in categories]
@@ -90,9 +90,11 @@ def collect_data(url):
                     description = soup.find('div', id=f'tab4').find('div', class_='detail-block-left text').text.replace('\n', '').strip()
                 except AttributeError:
                     description = ''
+                if category == 'Тумбы под раковину':
+                    category = 'Тумбы с раковиной'
                 for i in check_data:
                     if i == category:
-                        id = check_data.index(i) + 1
+                        id = check_data[i]
                 offer = ET.SubElement(offers, 'offer')
                 offer.set('id', str(k))
                 url_data = ET.SubElement(offer, 'url')
